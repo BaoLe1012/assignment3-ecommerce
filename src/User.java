@@ -66,6 +66,6 @@ public class User{
 
     @Override 
     public String toString(){
-        return String.format("{\"user_id\": \"%s\", \"user_name\": \"%s\", \"user_password\": \"%s\", \"user_register_time\": \"%s\", \"user_role\": \"%s\" }", this.userId, this.userName, this.userPassword, this.userRegisterTime, this.userRole);
+        return String.format("{\"user_id\":\"%s\",\"user_name\":\"%s\",\"user_password\":\"%s\",\"user_register_time\":\"%s\",\"user_role\":\"%s\"}", this.userId, this.userName, this.userPassword, this.userRegisterTime, this.userRole);
     }
 }

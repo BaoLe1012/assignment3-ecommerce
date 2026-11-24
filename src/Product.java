@@ -84,7 +84,7 @@ public class Product{
 
     @Override 
     public String toString(){
-        return String.format("{\"pro_id\": \"%s\", \"pro_model\": \"%s\", \"pro_category\": \"%s\", \"pro_name\": \"%s\", \"pro_current_price\": \"%.2f\", \"pro_raw-price\": \"%.2f\", \"pro_discount\": \"%.2f\", \"pro_likes_count\": \"%d\"}");
+        return String.format("{\"pro_id\":\"%s\",\"pro_model\":\"%s\",\"pro_category\":\"%s\",\"pro_name\":\"%s\",\"pro_current_price\":\"%.2f\",\"pro_raw-price\":\"%.2f\",\"pro_discount\":\"%.2f\",\"pro_likes_count\":\"%d\"}");
 
     }
 

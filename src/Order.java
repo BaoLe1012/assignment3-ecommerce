@@ -48,6 +48,6 @@ public class Order{
 
     @Override 
     public String toString(){
-        return String.format("{\"order_id\": \"%s\", \"user_id\": \"%s\", \"pro_id\": \"%s\", \"order_time\": \"%s\" }", this.orderLd, this.userId, this.proId, this.orderTime);
+        return String.format("{\"order_id\":\"%s\",\"user_id\":\"%s\",\"pro_id\":\"%s\",\"order_time\":\"%s\"}", this.orderLd, this.userId, this.proId, this.orderTime);
     }
 }
