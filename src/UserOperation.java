@@ -83,8 +83,8 @@ public class UserOperation{
         return original.toString();
     }
 
-    //checkUserNameExists()- the same way as checkUserIdExists() 
-    public boolean checkUserNameExists(String userName){
+    //checkUsernameExist()- the same way as checkUserIdExists() 
+    public boolean checkUsernameExist(String userName){
         File file = new File(FILE_PATH);
         if(file.exists()){
             try (Scanner scanner = new Scanner(file)) {
