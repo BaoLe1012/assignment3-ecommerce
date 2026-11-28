@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class CustomerOperation {
     
     //instance only one saved
@@ -224,4 +225,76 @@ public class CustomerOperation {
         }
         return false;// can not fine cusId
     }
+
+    //getCustomerList
+    public CustomerListResult getCustomerList(int pageNumber){
+        List<Customer> allCustomers = new ArrayList<>();
+        File file = new File("data/users.txt");
+        
+        //read all lines and find customer role, add to list
+        if(file.exists()){
+            try(Scanner scanner = new Scanner(file)){
+                while(scanner.hasNextLine()){
+                    String line = scanner.nextLine();
+                    if(line.isEmpty()){
+                        continue;
+                    }
+                    String[] parts = line.split(",");
+                    String role= parts[4].split(":", 2)[1];
+                    if("customer".equals(role)){
+                        String userId = parts[0].split(":", 2)[1];
+                        String userName = parts[1].split(":", 2)[1];
+                        String userPassword = parts[2].split(":", 2)[1];
+                        String registerTime = parts[3].split(":", 2)[1];
+                        String userEmail = parts[5].split(":", 2)[1];
+                        String userMobile = parts[6].split(":", 2)[1];
+
+                        allCustomers.add(new Customer(userId, userName, userPassword, registerTime, "customer", userEmail, userMobile));
+                    }
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        //cal page
+        int pageSize= 10;
+        int totalCustomers = allCustomers.size();
+        int totalPages= (int)Math.ceil((double)totalCustomers/ pageSize);
+
+        //check list if null return new list custom
+        if(totalCustomers== 0 || pageNumber < 1 || pageNumber> totalPages){
+            return new CustomerListResult(allCustomers, totalCustomers, totalPages);
+        }
+        //take 10 part of pageNumber
+        int startIndex= (pageNumber - 1)* pageSize;
+        int endIndex= Math.min(startIndex + pageSize , totalCustomers);
+        List<Customer> pageList= new ArrayList<>(allCustomers.subList(endIndex, endIndex));
+        return new CustomerListResult(pageList, endIndex, totalPages);
+    }
+    //delete all cus
+    public void deleteAllCustomer(){
+        File file = new File("users.txt");
+        if(!file.exists()){
+            return;
+        }
+        //remain admin role
+        List<String> adminLines = new ArrayList<>();
+        try(Scanner scanner= new Scanner(file)){
+            while (scanner.hasNextLine()){
+                String line= scanner.nextLine();
+                if(!line.contains("\"user_role\":\"customer\"")){
+                    adminLines.add(line);
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return;
+        }
+    }
 }
+
+
+
