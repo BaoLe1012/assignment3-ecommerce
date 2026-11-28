@@ -181,4 +181,47 @@ public class CustomerOperation {
      }
      return false;
 }
+    //delete customer account
+    public boolean deleteCustomer(String customerId){
+        if(customerId == null || customerId.isEmpty()){
+            return false;
+        }
+        File file = new File("data/users.txt");
+        if(!file.exists()){
+            return false;
+        }
+        List<String> remainingLines = new ArrayList<>();
+        boolean isDeleted = false;
+        String targetId="\"user_id\":\"" + customerId + "\"";
+
+        //read all lines and check id, role customer, if found, skip that line, else add to remainingLines
+        try (Scanner scanner = new Scanner(file)){
+            while(scanner.hasNextLine()){
+                String line = scanner.nextLine();
+                if(line.contains(targetId) && line.contains("\"user_role\":\"customer\"")){
+                    isDeleted = true; // no add to list, means delete
+                }
+                else{
+                    remainingLines.add(line);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        //if found, rewrite file without that line
+        if(isDeleted){
+            try (PrintWriter out= new PrintWriter(new FileWriter(file, false))){
+                for(String l : remainingLines){
+                    out.println(l);
+                }
+                return true;
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;// can not fine cusId
+    }
 }
